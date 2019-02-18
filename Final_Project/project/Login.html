@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Register and Login</title>
+
+<!-- javascript - firebase CSS -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script src="js/main.js"></script>
+
+<!-- STYLE CSS -->
+<link rel="stylesheet" href="css/login_style.css">
+</head>
+
+<body>
+
+<div class="wrapper" style="background-image: url('images/registration-form.jpg');">    
+
+<div class="inner">
+    
+  <div id="login_div" class="inner">
+     <div class="form-group">
+      <div class="form-wrapper">
+          <h1>התחברות</h1>
+          <label for="">אימייל </label>
+          <input type="email" class="form-control" id="l_email_field" />
+          <label for="">סיסמא </label>
+          <input type="password" class="form-control" id="l_password_field" />
+
+           <button onclick="Login()">היכנס  </button>
+           <button onclick="Register_page()">הירשם</button>
+      </div>
+      </div>
+  </div> 
+  
+  </div>   
+</div>
+
+
+
+</body>
+</html>

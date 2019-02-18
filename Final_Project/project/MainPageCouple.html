@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>דף התחברות ראשי</title> 
+
+    <!-- CSS
+   ================================================== -->
+    <link rel="stylesheet" href="css/MainPageCouple_style.css"> 
+
+    <!-- javascript - firebase CSS -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script src="js/main.js"></script>
+    
+    <!-- animate -->
+
+    <canvas id="canvas"></canvas>
+
+<!-------- script ----------->
+  
+    <script src="js/confetti.js"></script>
+
+
+</head>
+
+<body>
+
+
+        
+        <!-- header 
+       ================================================== -->
+    <header id="header" class="row">   
+    
+        <div class="header-logo">
+            <a href="MainPage.html">PlanDing</a>
+
+        </div>
+    
+
+        <nav id="header-nav">
+            <ul class="header-main-nav">
+                <li><a class="smoothscroll"  href="" title="about" >ברכות</a></li>
+                <li class="current" ><a onclick="ToDoList()" class="smoothscroll"  href="#home" title="home"> רשימת מטלות</a></li>
+                <li><a class="smoothscroll"  href="" title="pricing">גלריה </a></li>
+                <li><a class="smoothscroll"  href="" title="testimonials">מוזיקה </a></li>
+                <li><a class="smoothscroll"  href="" title="download">סידורי שולחנות</a></li>	
+                <li class="current" ><a onclick="GuestList()" class="smoothscroll"  href="#home" title="home"> רשימת מוזמנים</a></li>
+
+                <div class="dropdown">
+                    <button onclick="HomPageCouple()" class="dropbtn">בית</button>
+                    <div class="dropdown-content">
+                      <a href="#"> הגדרות</a>
+                      <a href="#"> עריכת פרטי אירוע</a>
+                      <a href="#">צפייה בהזמנה</a>
+                      <a onclick="LogOut()" href="#">התנתק</a>
+                    </div>
+
+                </div>
+ 
+            </ul>
+    
+        </nav>
+    
+    </header>
+
+
+    
+
+	<!-- Banner -->
+    <section id="banner">
+
+
+    
+            
+        <div class="heaad">
+            <h2 id="welcome"> נהל את חתונתך בקלות PlanDing</h2> 
+              
+        </div>
+        
+    </section>
+        
+
+        <!---- end banner  -->
+
+
+
+
+<!------------- countdown  --------------------->
+
+<div class="counter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="Arrives">
+                    <p class="counter-count">235</p>
+                    <a href="#" title="sign-up" class="button" button onclick="take()">התחבר</a>
+
+                    <p>Clicks: <a id="clicks">0</a></p>
+                    <p class="employee-p">מגיעים</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="Not-Arrives">
+                    <p class="counter-count">174</p>
+                    <p class="customer-p">לא מגיעים</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="Meyby">
+                    <p class="counter-count">37</p>
+                    <p class="design-p"> אולי מגיעים</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="Not-Answer">
+                    <p class="counter-count">385</p>
+                    <p class="order-p">לא אישרו</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+ <!-----------  end countdown ------------------> 
+
+
+  <!-----------  share ------------------> 
+
+ 
+ <h2>שתף את האירוע</h2>
+
+ <a class="share-btn share-btn-inverse share-btn-twitter"
+    href="https://twitter.com/share?url=http%3A%2F%2Fcodepen.file:///C:/Users/Gashawo/Desktop/Fina_Project/project/invited.html"
+    title="Share on Twitter">
+     <span class="share-btn-icon"></span>
+     <span class="share-btn-text">Twitter</span>
+ </a>
+
+ <a class="share-btn share-btn-inverse share-btn-facebook"
+    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq"
+    title="Share on Facebook">
+     <span class="share-btn-icon"></span>
+     <span class="share-btn-text">Facebook</span>
+ </a>
+
+ <a class="share-btn share-btn-inverse share-btn-email"
+    href="mailto:?subject=Share Buttons Demo&body=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq"
+    title="Share via Email">
+     <span class="share-btn-icon"></span>
+     <span class="share-btn-text">Email</span>
+ </a>
+
+ <a class="share-btn share-btn-inverse share-btn-more"
+    href="https://www.addtoany.com/share_save?linkurl=http%3A%2F%2Fcodepen.io%2Fsunnysingh%2Fpen%2FOPxbgq"
+    title="More share options">
+     <span class="share-btn-icon"></span>
+     <span class="share-btn-text-sr">More</span>
+ </a>
+
+
+   <!----------- end share ------------------> 
+
+
+</body>
+</html>

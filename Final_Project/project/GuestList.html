@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>רשימת מוזמנים</title>  </title>
+
+    <!-- CSS
+   ================================================== -->
+    <link rel="stylesheet" href="css/GuestList_style.css"> 
+
+	<!----- js-jquery - add Guest to table --------->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+ <script src="js/GuestList_js.js"></script>
+
+ <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+
+ <script src="js/main.js"></script>
+
+
+</head>
+
+<body>
+
+        <!-- header 
+       ================================================== -->
+    <header id="header" class="row">   
+    
+        <div class="header-logo">
+            <a href="MainPage.html">PlanDing</a>
+
+        </div>
+    
+
+        <nav id="header-nav">
+                <ul class="header-main-nav">
+                    <li><a class="smoothscroll"  href="" title="about" >ברכות</a></li>
+                    <li><a class="smoothscroll"  href="" title="pricing">גלריה </a></li>
+                    <li><a class="smoothscroll"  href="" title="testimonials">מוזיקה </a></li>
+                    <li><a class="smoothscroll"  href="" title="download">סידורי שולחנות</a></li>	
+                    <li class="current" ><a onclick="GuestList()" class="smoothscroll"  href="#home" title="home"> רשימת מוזמנים</a></li>
+    
+                    <div class="dropdown">
+                        <button onclick="HomPageCouple()" class="dropbtn">בית</button>
+                        <div class="dropdown-content">
+                          <a href="#"> הגדרות</a>
+                          <a href="#"> עריכת פרטי אירוע</a>
+                          <a href="#">צפייה בהזמנה</a>
+                          <a onclick="LogOut()" href="#">התנתק</a>
+                        </div>
+    
+                    </div>
+     
+                </ul>
+        
+            </nav>
+        
+        </header>
+
+
+    
+
+	<!-- header -->
+    <section id="header-head">
+
+   
+        <div class="head">
+            <h2> רשימת מוזמנים</h2> 
+            <h3> נהל את רשימת המוזמנים לחתונה </h3>  
+        </div>
+        
+    </section>
+        
+
+    <!---- end header  -->
+
+
+<!-------- table ---------->
+
+
+    <form>
+        <select type="text" id="status" placeholder=" הכנס סטאטוס מוזמן">
+            <option disabled selected>הכנס סטאטוס מוזמן </option>
+            <option value="מגיע">מגיע</option>
+            <option value="אולי">אולי </option>
+            <option value="לא מגיע">לא מגיע</option>
+            <!-- <input type="reset" value="reset" /> -->
+        </select>
+
+        <select type="text" id="category" placeholder="מה הקירבה של המוזמן">
+        <option disabled selected>הכנס קירבה של המוזמן </option>
+        <option value="עבודה חתן">עבודה חתן </option>
+        <option value="עבודה כלה">עבודה כלה </option>
+        <option value="משפחה חתן ">משפחה חתן </option>
+        <option value="משפחה ">משפחה כלה </option>
+        <option value="חברים חתן ">חברים חתן </option>
+        <option value="חברים כלה ">חברים כלה </option>
+        <option value="אחר ">אחר </option>
+        <!-- <input type="reset" value="reset" /> -->
+    </select>
+        
+		<input type="text" id="phone" placeholder="הכנס פלאפון של המוזמן">
+		<input type="text" id="name" placeholder="הכנס שם מלא">
+		<button onclick="RemoveGuest()" type="button" class="delete-row"><i class="fa fa-trash" style="color:rgb(245, 42, 7)"></i>&nbspמחק מוזמן  </button>
+    	<button onclick="AddGuest()" type="button" class="add-row"><i class="fa fa-plus" style="color:green"></i> &nbspהוסף מוזמן </button>
+	</form>
+	
+    <table id="table">
+        <thead>
+            <tr>
+				<th>סטאטוס</th>
+				<th>קטגוריה</th>
+				<th>טלפון</th>
+                <th>שם מלא</th>
+                <th>בחר</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-----------end table------------->
+
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>
+

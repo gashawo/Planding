@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>form</title>
+
+<!-- javascript - firebase CSS -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script src="js/main.js"></script>
+
+<!-- STYLE CSS -->
+<link rel="stylesheet" href="css/form_style.css">
+</head>
+
+<body>
+
+        <form action="action_page.php">
+                <div class="container">
+                    <h1>פרטי אירוע</h1> 
+                    <hr>
+                    
+                    <label for="broom-name"><b>שם החתן</b></label><br>
+                    <input type="text" placeholder="הכנס שם חתן " name="email" required id="broom_name">
+        
+                    <br>
+                    <label for="bride-name"><b>שם הכלה</b></label><br>
+                    <input type="text" placeholder="הכנס שם הכלה " name="psw" required id="bride_name">
+        
+                    <br>
+                      
+                    <label for="w-place"><b>מקום האירוע </b></label><br>
+                    <input type="text" placeholder=" הכנס את מקום האירוע " name="w-place" required id="Wedding_place">
+        
+                    <br>
+                    
+                      
+                    <label for="date"><b>תאריך האירוע </b></label><br>
+                    <input type="date" name="wday" id="Wedding_date">
+        
+                    <br>
+                    
+        
+                    <label for="time-first"><b>שעת קבלת פנים</b></label><br>
+                    <input type="time" name="w_time" id="Weding_reception">
+        
+                    <br>
+        
+        
+                    <label for="time-ser"><b>שעת חופה </b></label>
+                    <input type="time" name="w_time" id="Wedding_cermony">
+        
+                    
+                    <hr> 
+
+                </div>
+                      
+                        
+            </form>
+
+             <!---- store data in firebase and get in to MainPageCouple ----->
+             <button onclick="StoreData()" class="registerbtn">צור אירוע</button>
+        
+
+</body>
+</html>
+    

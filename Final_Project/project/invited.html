@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>דף התחברות ראשי</title>  </title>
+
+    <!-- CSS
+   ================================================== -->
+    <link rel="stylesheet" href="css/invited_style.css"> 
+
+    <link href="css/font-icon.css" rel="stylesheet">
+
+    
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/countdown.js"></script>
+
+</head>
+
+<body>
+
+    <!-- header 
+   ================================================== -->
+   <header id="header" class="row">   
+
+        <div class="header-logo">
+            <a href="MainPage.html">PlanDing</a>
+        </div>
+
+
+<!----- confetti ----->
+            
+<div class="container">
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        
+      </div>
+
+
+      <!------ end confetti  -------->
+
+
+
+           <nav id="header-nav">
+            <ul class="header-main-nav">
+                <li><a href="#google-map-area" class="smoothscroll"  href="" title="about">נווט</a></li>
+                <li><a  class="smoothscroll"  href="" title="about">גלריה</a></li>
+                <li><a href="#rsvp" class="smoothscroll"  href="" title="about">טרמפים</a></li>
+                <li><a class="smoothscroll"  href="" title="pricing">מוזיקה </a></li>
+                <li><a class="smoothscroll"  href="" title="testimonials">תפריט</a></li>
+                <li><a href="#rsvp" class="smoothscroll"  href="" title="download">אישור הגעה</a></li>	
+                <li class="current"><a class="smoothscroll"  href="#banner" title="home">בית</a></li>
+
+            </ul>
+
+            </nav>
+
+   </header>
+
+
+           <!-- Banner -->
+           <section id="banner">
+                <div class="inner">
+                    <i class="small-icon icon icon-tie"></i>
+                    <h5 class="date"></h5>ר2019 ספטמבר 28</h5>
+                    <h3 class="pre-title">Save The Date</h3>
+                    <h1 class="title" id="GroomName" >גשאו <i class="icon icon-heart"></i> תהילה</h1>    
+                    <h1><a id="GroomName"></a><a id="BrideName"></a></h1>    
+                    <p>Clicks: <a id="clicks">0</a></p> 
+                </div>
+            </section>
+    
+    <!---- end banner  -->
+
+    <section class="section w-details-area" id="details">
+        <div class="container">
+            <div class="row">
+                <div class="heading">
+                <br>
+                        <h2 class="title"> פרטי החתונה</h2>
+                        <span class="heading-bottom"><i class="icon icon-star"></i></span>
+                </div>
+
+                <div class="wedding-details margin-bottom">
+						
+						<div class="w-detail right">
+							<i class="icon icon-ciurclke"></i>
+							<h4 class="title">קבלת פנים</h4>
+							<p class="title-det">נתכנס בשעה 19:30 לאכול</p>
+						</div><!-- w-detail -->
+						
+						<div class="w-detail left">
+							<i class="icon icon-wine-glass"></i>
+							<h4 class="title">חופה וקידושין</h4>
+							<p class="title-det">נתרגש יחד עם הזוג בחופב</p>
+						</div><!-- w-detail -->
+						
+						<div class="w-detail right">
+							<i class="icon icon-cake"></i>
+							<h4 class="title">אוכל וריקודים</h4>
+							<p class="title-det">נאכל ונרקוד עד השעות של הלילה</p>
+						</div><!-- w-detail -->
+						
+						<div class="w-detail left">
+							<i class="icon icon-camera"></i>
+							<h4 class="title">תמונות</h4>
+							<p class="title-det">נשאיר כמה תמונות</p>
+						</div><!-- w-detail -->
+            </div>
+        </div>
+    </section>
+
+
+    <!------------------------------------ rsvp --------------------------->
+<section class="rsvp" id="rsvp">
+    
+  <!-- h1 id title -->
+  <h1 id="title">אישורי הגעה</h1>
+
+  <div id="form-body">
+    <!-- p id description -->
+    <p id="description">עזור לנו לקלוע לטעמך</p>
+
+    <!-- form id survey-form -->
+    <form id="survey-form" action="#" method="GET">
+      <!-- name -->
+      <div class="row">
+        <div class="answers">
+          <input required type="text" name="name" id="guest_name" class="input-field" placeholder=" הכנס שם מלא">
+        </div>
+        <div class="labels">
+           <label for="name" id="name-label">:שם *</label>
+        </div>
+      </div>
+      <!-- email w/ error handling-->
+      <div class="row">
+        <div class="answers">
+          <input required type="number" name="phone" id="guest_phone" class="input-field" placeholder="הכנס מספר טלפון">
+        </div>
+        <div class="labels">
+           <label for="number" id="email-label">:טלפון *</label>
+        </div>
+      </div>
+      <!-- number w/ error handling -->
+      <div class="row">
+        <div class="answers">
+          <input required type="number" name="count" id="number_of_guest" class="input-field" min="1" max="5" placeholder="מספר מגיעים לאירוע">
+        </div>
+        <div class="labels">
+           <label for="count" id="number-label"> :כמה מגיעים</label>
+        </div>
+      </div>
+      <!-- dropdown -->
+      <div class="row">
+        <div class="answers" id="dish">
+            <select id="dropdown">
+                <option disabled selected>מנה מועדפת</option>
+                <option value="1">צימחוני</option>
+                <option value="2">ילדים</option>
+                <option value="3">טבעוני</option>
+            </select>
+        </div>
+        <div class="labels">
+           <label for="dropdown" id="dropdown-label">:מנה</label>
+        </div>
+      </div>
+
+
+      <!-- radio buttons -->
+          <div class="row">
+        <div class="answers" id="music">
+            <select id="dropdown">
+                <option disabled selected>מוזיקה מועדפת</option>
+                <option value="1">אמהרית</option>
+                <option value="2">ישראלית ים תיכונית</option>
+                <option value="3">ישראלית</option>
+                <option value="3">היפ הופ</option>
+                <option value="3">פופ</option>
+                <option value="3">חסידית</option>
+            </select>
+        </div>
+        <div class="labels">
+           <label for="dropdown" id="dropdown-label">:מוזיקה</label>
+        </div>
+      </div>
+
+      <!-- checkboxes -->
+      <div class="row">
+        <div class="answers" id="">
+          <ul>
+            <li class="checkbox-answers"><label class="clickable"></label><input type="checkbox" name="checkbox-button"
+                                    value="1">
+                                כן</label></li>
+            <li class="checkbox-answers"><label class="clickable"><input type="checkbox" name="checkbox-button"
+                                    value="2">
+                                לא</label></li>
+            <li class="checkbox-answers"><label class="clickable"><input type="checkbox" name="checkbox-button"
+                                    value="3">
+                                אולי</label></li>
+          </ul>
+        </div>
+        <div class="labels">
+            <label for="checkboxes" id="checkboxes">?היית מעוניין בהסעה</label>
+      </div>
+        
+
+
+     <!-- checkboxes -->
+     <div class="row">
+            <div class="answers">
+              <ul>
+                <li class="checkbox-answers"><label class="clickable"></label><input type="checkbox" name="checkbox-button"
+                                        value="1">
+                                    כן</label></li>
+                <li class="checkbox-answers"><label class="clickable"><input type="checkbox" name="checkbox-button"
+                                        value="2">
+                                    לא</label></li>
+                <li class="checkbox-answers"><label class="clickable"><input type="checkbox" name="checkbox-button"
+                                        value="3">
+                                    אולי</label></li>
+              </ul>
+            </div>
+            <div class="labels">
+            <label for="checkboxes" id="checkboxes">? מעוניין להציע טרמפ</label>
+        </div>
+
+        <div class="row">
+                <div class="answers">
+                  <input required type="text" name="name" id="name" class="input-field" placeholder=" איזור בארץ">
+                </div>
+                <div class="labels">
+                   <label for="name" id="name-label">:במידה וכן מאיפה</label>
+                </div>
+              </div>
+      
+      <!-- submit button -->
+      <button onclick="invitwer_Submit()" id="submit" type="submit">אשר הגעה</button>
+
+   </section>
+
+
+    <!---------------------------------- end rsvp ------------------------->
+
+
+
+<!--------------- google map ---------------------->
+
+    <!-- Map Section Start -->
+    <section id="google-map-area">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 padding-0">
+              <object style="border:0; height: 300px; width: 100%;" data="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34015.943594576835!2d-106.43242624069771!3d31.677719472407432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86e75d90e99d597b%3A0x6cd3eb9a9fcd23f1!2sCourtyard+by+Marriott+Ciudad+Juarez!5e0!3m2!1sen!2sbd!4v1533791187584"></object>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Map Section End -->
+  
+  
+  
+  
+  
+  <!-------------- end google map -------------->
+  
+
+  <!--footer - thanks-->
+
+
+	<div class="bottom-section">
+		<div class="container">
+		    <h3>תודה שביקרתם</h3>
+		</div>
+    </div>
+    
+    
+<!--footer- thanks end-->
+
+
+
+
+
+
+</body>
+</html>

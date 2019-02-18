@@ -1,0 +1,245 @@
+
+
+/* ------------------------------------------------------------------- 
+ * header logo 
+ * ------------------------------------------------------------------- */
+
+ .header-logo {
+  font-size: 40px;
+  font-style: oblique;
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+  z-index: 501;
+  
+}
+
+
+#header {
+  width: 100%;
+  height: 72px;   
+  background-color: rgba(249, 89, 89, 0.678);
+  position: fixed;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 501;
+}
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 
+* navigation - (_layout.scss) 
+* ------------------------------------------------------------------- */
+
+/*** nav dropdwon  ****/
+
+
+
+.dropbtn {
+  background-color: rgb(231, 104, 81);
+  color: white;
+  padding: 16px;
+  margin: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+
+
+/*** end nav dropdwon  ****/
+
+
+
+
+
+
+a {
+  color: rgb(250, 246, 246);
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+a:hover, a:active, a:focus {
+  color: rgb(253, 250, 250);
+  outline: none;
+  text-decoration: none;
+}
+
+
+
+#header-nav {
+  font-family: 'roboto', sans-serif;
+  
+  font-size: 30px;
+  position: absolute;
+  top: 0;
+  right: 40px;
+}
+
+#header-nav .header-main-nav {
+  font-family: 'roboto', sans-serif;
+  font-size: 20px;  
+  display: inline-block;
+  list-style: none;
+  height: 72px;
+  margin: 0 1rem 0 0;
+}
+
+#header-nav .header-main-nav li {
+  display: inline-block;
+  padding-left: 0;
+  margin-right: 1.5rem;
+}
+
+#header-nav .header-main-nav li a {
+  display: block;
+  line-height: 72px;
+  
+}
+
+#header-nav .header-main-nav li a,
+#header-nav .header-main-nav li a:visited {
+  color: white;
+  
+  
+}
+
+#header-nav .header-main-nav li a:hover,
+#header-nav .header-main-nav li a:focus {
+  color: black;
+  
+}
+
+#header-nav .header-main-nav li.current a {
+  color:white;
+  
+  
+  
+}
+
+
+
+/******************************************/
+
+
+
+
+
+body {
+  background: #eee;
+  color: #444;
+  font-family: 'Helvetica', arial, sans-serif;
+}
+
+.container {
+  background: #fff;
+  max-width: 600px;
+  width: 100%;
+  display: table;
+  margin: 0 auto;
+  margin-top: 40px;
+  border: 1px solid #cfcbcc;
+}
+
+input {
+  border: none;
+  display: block;
+  width: 98.4%;
+  line-height: 1.5;
+  padding: 8px 0 8px 10px;
+  border-bottom: 1px solid #cfcbcc;
+  outline:0;
+}
+
+h1,h2 {
+  text-align: center;
+  margin-bottom: 0px;
+  line-height: 1;
+}
+h2 {
+  color: gray;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+  li {
+    color: #899098;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 8px 0;
+  }
+    li:before {
+      content: "\25A1";
+      padding: 10px 10px;
+      font-size: 20px;
+    }
+    li:hover {
+      text-decoration: line-through;
+      cursor: pointer;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+
+.checked {
+  color:green;
+}
+.checked:before {
+      content: "\2713";
+      padding: 10px 10px;
+      font-size: 20px;
+    }
+    .checked:hover {
+      text-decoration: none;
+    }
+    .checked:after {
+        content: "(הסר)";
+        color: tomato;
+        text-align: right;
+      }
+    
