@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+	<link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css\all.css">
+	<link rel="stylesheet" href="css\main.css">
+
+	<style>
+		#guestList {
+			min-height: 100px;
+			background: #ccc;
+		}
+
+		.inline {
+			display: inline-block;
+			margin-right: 5px;
+			margin-bottom: 10px;
+		}
+
+		.removeTable {
+			color: #333;
+			position: absolute;
+			font-size: 14px;
+			margin-left: 3px;
+			font-weight: bold;
+		}
+
+		.guest-name {
+			background-color: white;
+			padding: 5px 10px;
+			margin: 3px;
+			border-radius: 3px;
+			display: inline-block;
+		}
+
+		.guest-name span {
+			padding: 3px;
+			padding-left: 10px;
+			cursor: pointer;
+			font-size: 14px;
+			color: red;
+		}
+
+		.guest-name span:after {
+			content: 'x';
+		}
+
+		.gnum {
+			font-size: 13px;
+		}
+
+		.table {
+			background-color: #ccc;
+			border: dashed 4px transparent;
+			border-radius: 10px;
+			margin: 5px;
+			padding: 2px;
+			transition: background-color 0.3s;
+			display: inline-table;
+			text-align: center;
+			min-width: 103px;
+		}
+
+		.tb_round {
+			width: 250px;
+			min-height: 250px;
+			border-radius: 50%;
+		}
+
+		.tb_8ppl {
+			width: 150px;
+			min-height: 250px;
+		}
+
+		.guestListContainer::-webkit-scrollbar {
+			display: none;
+		}
+
+		.guestListContainer:hover::-webkit-scrollbar {
+			display: block;
+
+		}
+
+		.guestListContainer::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+			background-color: #F5F5F5;
+		}
+
+		.guestListContainer::-webkit-scrollbar {
+			width: 10px;
+			background-color: #F5F5F5;
+		}
+
+		.guestListContainer::-webkit-scrollbar-thumb {
+			/*background-color: #007bff;*/
+			background-color: #F95959;
+			background-image: -webkit-linear-gradient(45deg,
+				rgba(255, 255, 255, .2) 25%,
+				transparent 25%,
+				transparent 50%,
+				rgba(255, 255, 255, .2) 50%,
+				rgba(255, 255, 255, .2) 75%,
+				transparent 75%,
+				transparent)
+		}
+	</style>
+	<script>
+
+	</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+		<a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item ">
+					<a class="nav-link" href="dashboard.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="event_create.html">Create Event</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="manage_guest.html">Guest Manage</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="table_management.html">Table Manage<span
+							class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="todo.html">ToDo</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="logout">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="float-left">
+							<div class="inline dropdown">
+								<button type="button" class="btn btn-outline-success dropdown-toggle  mt-3" data-toggle="dropdown">
+									Add Table
+								</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#" id="addSqureTable"> Squre Table</a>
+									<a class="dropdown-item" href="#" id="addRoundTable"> Round Table</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="float-right">
+							<button class="btn btn-success mt-3 mb-3 mr-3" id="saveTables">
+								<i class="fas fa-save"></i> Save
+							</button>
+							<button class="btn btn-success mt-3 mb-3" id="getPDF">
+								<i class="fas fa-file-pdf"></i> Get PDF
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="py-2 fixed flex-grow-1" style="height:100vh;">
+
+							<div class="guestListContainer" style="height:80%;overflow: auto">
+								<div id="guestList">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tables" class="col-sm-9">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/sweetalert.min.js"></script>
+	<script src="js/gijgo.min.js" type="text/javascript"></script>
+
+
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+
+	<script src="js/main.js"></script>
+
+	<script src="js/firebase.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+	<script src="js/jspdf.min.js"></script>
+
+	<script>
+		var table_count = 0;
+		var tables = {};
+
+		firebase.initializeApp(firebaseConfig);
+
+		var guest_list = {};
+
+		function removeTable(element) {
+			var table_id_deleted = element.id;
+			for (var _guest_id in tables[table_id_deleted]) {
+				$("#guestList").append(document.getElementById(_guest_id))
+			}
+			delete tables[table_id_deleted];
+			$("#" + table_id_deleted).remove();
+		}
+
+		function removeGuest(id) {
+			var guest_id_deleted = id;
+
+			var table_id = guest_list[guest_id_deleted]["table_id"];
+			if (table_id != 0) {
+				delete tables[table_id][guest_id_deleted];
+				$("#" + table_id).find(".gnum span").html(Object.values(tables[table_id]).length)
+			}
+			delete guest_list[guest_id_deleted];
+			$("#" + guest_id_deleted).remove();
+			console.log(guest_id_deleted, guest_list, tables);
+		}
+
+		$(document).ready(function () {
+
+			//Data Fetched
+			firebase.auth().onAuthStateChanged(function (user) {
+				if (user) {
+					userid = user.uid;
+					var database = firebase.database();
+					database.ref("users/" + userid + "/event/guests").once('value').then(function (snapshot) {
+						if (snapshot.exists()) {
+							var guest_list = snapshot.val();
+
+							for (var id in guest_list) {
+								guest_list[id].table_id = 0;
+								$("#guestList").append("<div id='" + id + "' draggable='true' class='guest-name'>" +
+									guest_list[id].fullname + "<span onclick='removeGuest(" + id + ")'></span></div>");
+							}
+						}
+						else {
+							alert("No Data");
+							$("#no-guest-list").removeClass("d-none");
+						}
+					});
+				} else {
+					window.location.href = "login.html";
+				}
+			});
+
+			//Data Fetch End
+
+			$("#addSqureTable").click(function () {
+				table_count++;
+				var new_table_id = "table" + table_count;
+				$("#tables").append(
+					'<div class="table tb_8ppl droptarget" id="' + new_table_id + '" style=" transform: translate(0px, 0px);">' +
+					'<p class="removeTable" onclick="removeTable(' + new_table_id + ')">X</p>' +
+					'<span class="tableName">Table ' + table_count + '</span><br>' +
+					'<span class="gnum">(<span>0</span> Guests)</span><br>' +
+					'</div>'
+				);
+				tables[new_table_id] = {};
+				$("#" + new_table_id).resizable();
+			});
+
+			$("#addRoundTable").click(function () {
+				table_count++;
+				var new_table_id = "table" + table_count;
+				$("#tables").append(
+					'<div class="table tb_round droptarget" id="' + new_table_id + '" style=" transform: translate(0px, 0px);">' +
+					'<p class="removeTable" onclick="removeTable(' + new_table_id + ')">X</p>' +
+					'<span class="tableName">Table ' + table_count + '</span><br>' +
+					'<span class="gnum">(<span>0</span> Guests)</span><br>' +
+					'</div>'
+				);
+				tables[new_table_id] = {};
+				$("#" + new_table_id).resizable();
+			});
+
+			document.addEventListener("dragstart", function (event) {
+				event.dataTransfer.setData("guest_id", event.target.id);
+				console.log("guest id", event.target.id)
+				event.target.style.opacity = "0.4";
+			});
+
+			document.addEventListener("drag", function (event) {
+			});
+
+			document.addEventListener("dragend", function (event) {
+				event.target.style.opacity = "1";
+			});
+
+			document.addEventListener("dragenter", function (event) {
+				var target = $(event.target);
+				if (target.hasClass("droptarget")) {
+					event.target.style.border = "3px solid black";
+					event.target.style.backgroundColor = "grey";
+				}
+			});
+
+			document.addEventListener("dragover", function (event) {
+				event.preventDefault();
+			});
+
+			document.addEventListener("dragleave", function (event) {
+				var target = $(event.target);
+				if (target.hasClass("droptarget")) {
+					event.target.style.border = "";
+					event.target.style.backgroundColor = "#ccc";
+				}
+			});
+
+			document.addEventListener("drop", function (event) {
+				event.preventDefault();
+				var target = $(event.target);
+				if (target.hasClass("droptarget")) {
+					// document.getElementById("demo").style.color = "";
+					event.target.style.border = "";
+					event.target.style.backgroundColor = "#ccc";
+					var data = event.dataTransfer.getData("guest_id");
+					console.log("data = ", data);
+					event.target.appendChild(document.getElementById(data));
+
+					tables[event.target.id][data] = document.getElementById(data).innerText;
+					
+					var old_table_id = guest_list[data]["table_id"];
+					if (old_table_id != 0) {
+						delete tables[old_table_id][data];
+						$("#" + old_table_id).find(".gnum span").html(Object.values(tables[old_table_id]).length)
+					}
+
+					guest_list[data]["table_id"] = event.target.id;
+					target.find(".gnum span").html(Object.values(tables[event.target.id]).length)
+
+				}
+			});
+			$("#getPDF").click(function () {
+				var doc = new jsPDF('A4');
+				doc.fromHTML($('#tables').html(), 15, 15, {});
+				doc.save('guest-arrangement.pdf');
+			});
+
+			$("#saveTables").click(function () {
+				console.log(tables);
+			});
+		});
+	</script>
+</body>
+
+</html>
