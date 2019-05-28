@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Guest Manager</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html">Create Event</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="manage_guest.html">Guest Manage<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html">Table Manage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">ToDo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <label class="btn btn-primary">
+                                    <i class="fas fa-file-import"></i> Import <input type="file" hidden id="importXls" accept=".xls,.xlsx">
+                                </label>
+                                <label class="btn btn-success" id="export">
+                                    <i class="fas fa-file-export"></i> Export
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label>Guest Name</label>
+                                <div class="input-group">
+                                    <input type="text" id="guestname" class="form-control" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label>Phone No</label>
+                                <div class="input-group">
+                                    <input type="text" id="mobileno" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label>Relation</label>
+                                <div class="input-group">
+                                    <select class="custom-select" id="relation">
+                                        <option value="0" disabled selected>Select Relation</option>
+                                        <optgroup label="Groom">
+                                            <option value="1">Family</option>
+                                            <option value="2">Friend</option>
+                                            <option value="3">Work</option>
+                                        </optgroup>
+                                        <optgroup label="Bride">
+                                            <option value="4">Family</option>
+                                            <option value="5">Friend</option>
+                                            <option value="6">Work</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3 mt-auto">
+                                <div class="input-group">
+                                    <input type="button" id="add-guest" class="btn btn-success w-100" value="Add Guest">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Full Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Relation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guest-list">
+
+                            </tbody>
+                        </table>
+                        <table class="table table-hover d-none" id="exportTbl">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Relation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guest-list2">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/firebase.js"></script>
+
+    <script src="js/xlsx.full.min.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        var userid = "";
+
+        var relation = ["Groom Family", "Groom Friend", "Groom Work", "Bride Family", "Bride Friend", "Bride Work"];
+
+        function updateUI() {
+            var database = firebase.database();
+            var ref = database.ref("users/" + userid + "/event/guests");
+
+
+            ref.on('child_added', function (data) {
+                var icon="";
+                var textStatus="Didn't Given";
+                if(parseInt(data.val().status)==1)
+                {
+                    textStatus="Coming";
+                    icon="<td><i class='fas text-success fa-check'></i></td>";
+                }
+                else if(parseInt(data.val().status)==0)
+                {
+                    textStatus="Not Coming";
+                    icon="<td><i class='fas text-danger fa-times'></i></td>";
+                }
+                else
+                {                    
+                    icon="<td><i class='fas fa-minus'></i></td>";
+                }
+                
+                $("#guest-list").append("<tr data-id='" + data.key + "'><td><button class='btn btn-danger delete'><i class='mr-3 fas fa-times'></i>Delete</button></td><td>" + data.val().fullname + "</td><td>" +
+                    data.key + "</td><td>" + relation[data.val().relation - 1] + "</td>"+icon);
+                $("#guest-list2").append("<tr><td>" + data.val().fullname + "</td><td>" +
+                    data.key + "</td><td>" + relation[data.val().relation - 1] + "</td><td>"+textStatus+"</td>");
+
+                $(".delete").click(function () {
+                    swal(
+                        {
+                            title: "Delete!!!",
+                            text: "Are you sure to delete this item? ",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }
+                    ).then((isConfirm) => {
+                        if (isConfirm) {
+                            var database = firebase.database();
+                            var ref = database.ref("users/" + userid + "/event/guests");
+
+                            var key = $(this).parent().parent().data("id");
+
+                            ref.child(key).remove();
+                            $(this).parent().parent().remove();
+                        }
+                    });
+                });
+            });
+        }
+
+        function handleFile(e) {
+            var files = e.target.files, f = files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, { type: 'array' });
+
+                var first_sheet_name = workbook.SheetNames[0];
+
+                const sheet = workbook.Sheets[first_sheet_name];
+                var range = XLSX.utils.decode_range(sheet['!ref']);
+                
+                var database = firebase.database();
+                var ref = database.ref("users/" + userid + "/event/guests");
+
+                successImportCount=0;
+                failedImportCount=0;
+                failedImportRowsNo=[];
+
+                for (let rowNum = range.s.r+1; rowNum <= range.e.r; rowNum++) {
+                    const fullname = sheet[XLSX.utils.encode_cell({r: rowNum, c: 0})].v;
+                    const mobileno = sheet[XLSX.utils.encode_cell({r: rowNum, c: 1})].v;
+                    const relation = sheet[XLSX.utils.encode_cell({r: rowNum, c: 2})].v;
+                    const status = sheet[XLSX.utils.encode_cell({r: rowNum, c: 3})].v;
+                    
+                    if(fullname!=undefined && mobileno!=undefined && relation!=undefined && status!=undefined)
+                    {
+                        data = { fullname: fullname, relation: relation, status: -1 };
+                        ref.child(mobileno).set(data);
+                        successImportCount++;
+                    }
+                    else
+                    {
+                        failedImportCount++;
+                        failedImportRowsNo.push(rowNum+1);
+                    }
+                    var text=`Successfully Imported Contact : ${successImportCount}\nFailed Count : ${failedImportCount}`;
+                    if(failedImportCount>0)
+                    {
+                        text+=`\n Failed To Import Row Number[s] ${failedImportRowsNo.join()} `
+                    }
+                    swal(
+                        {
+                            title: "Import Completed",
+                            text: text,
+                            icon: "success",
+                        }
+                    )
+                }
+            };
+            reader.readAsArrayBuffer(f);
+        }
+        
+        function doit(type, fn, dl) {
+            var elt = document.getElementById('exportTbl');
+            var wb = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
+            return dl ?
+                XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
+                XLSX.writeFile(wb, fn || ('test.' + (type || 'xlsx')));
+        }
+
+        $(document).ready(function () {
+            var importEle=document.getElementById("importXls");
+            importEle.addEventListener('change', handleFile, false);
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    userid = user.uid;
+                    updateUI();
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+
+            $("#export").click(function(){
+                doit("xlsx");
+            });
+
+            $("#add-guest").click(function () {
+                var fullname = $("#guestname").val();
+                var mobileno = $("#mobileno").val();
+                var relation = $("#relation").val();
+
+                if (fullname.length > 0 && mobileno.length > 0 && relation != 0) {
+                    var database = firebase.database();
+                    var ref = database.ref("users/" + userid + "/event/guests");
+
+                    data = { fullname: fullname, relation: relation, status: -1 };
+
+                    ref.child(mobileno).once('value').then(function (snapshot) {
+                        if (snapshot.val()) {
+                            swal(
+                                {
+                                    title: "Member Exists",
+                                    text: "Member with the same number exists. Do you want to update the record?",
+                                    icon: "warning",
+                                    buttons: true,
+                                    dangerMode: true,
+                                }
+                            ).then((isConfirm) => {
+                                if (isConfirm) {
+                                    ref.child(mobileno).set(data);
+                                    var $row = $('tr[data-id="' + mobileno + '"]');
+                                    $row.find("td:eq(1)").text(data.fullname);
+                                    $row.find("td:eq(2)").text(mobileno);
+                                } else {
+                                    swal({
+                                        title: "Update Canceled",
+                                        text: "Updating a member is canceled",
+                                        icon: "info"
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            ref.child(mobileno).set(data);
+                        }
+                    });
+                }
+                else {
+                    swal({
+                        title: "Oh!!! Wait",
+                        text: "You forgot to fill some field",
+                        icon: "warning"
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

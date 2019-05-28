@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Create Event</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="event_create.html">Create Event<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_guest.html">Guest Manage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html">Table Manage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">ToDo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <section class="background-section">
+        <div class="row h-100">
+            <div class="col-sm-12 col-lg-4 offset-lg-4 my-auto">
+                <div class="card bg-white rounded">
+                    <div class="card-header bg-white text-center text-uppercase font-weight-regular">
+                        <h4>Create Event</h4>
+                    </div>
+                    <div class="card-body" disabled>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Groom Name</label>
+                                    <input type="text" id="groomName" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Bride Name</label>
+                                    <input type="text" id="brideName" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Wedding Place</label>
+                            <input type="text" id="weddingPlace" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Wedding Date</label>
+                            <input id="weddingDate"/>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <label>Receotion Time</label>
+                                <input id="receotionTime"/>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label>Ceremony Time</label>
+                                <input id="ceremonyTime"/>
+                            </div>
+                        </div>
+                        <div class="form-group text-center mt-3">
+                            <button class="btn btn-lg btn-primary text-uppercase" id="btn_createEvent">Create Event</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/firebase.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        var userid=0;
+        function redirectToDashboard() {
+            window.location.href="dashboard.html";
+        }
+
+        $(document).ready(function () {
+            
+            $("#groomName").attr("disabled",true);
+            $("#brideName").attr("disabled",true);
+            $("#weddingDate").attr("disabled",true);
+            $("#receotionTime").attr("disabled",true);
+            $("#ceremonyTime").attr("disabled",true);
+            $("#weddingPlace").attr("disabled",true);
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    userid = user.uid;
+                    var database = firebase.database();
+                    database.ref("users/" + userid + "/event/eventDetail").once('value').then(function (snapshot) {
+                        var details=snapshot.val();
+                        $("#groomName").removeAttr("disabled");
+                        $("#brideName").removeAttr("disabled");
+                        $("#weddingDate").removeAttr("disabled");
+                        $("#receotionTime").removeAttr("disabled");
+                        $("#ceremonyTime").removeAttr("disabled");
+                        $("#weddingPlace").removeAttr("disabled");
+                        if(details)
+                        {
+                            var groom = details.groomName;
+                            var brideName =  details.brideName;
+                            var weddingDate = details.weddingDate;
+                            var receotionTime = details.receotionTime;
+                            var ceremonyTime = details.ceremonyTime;
+                            var place= details.weddingPlace;
+                            
+                            $("#groomName").val(groom);
+                            $("#brideName").val(brideName);
+                            $("#weddingDate").val(weddingDate);
+                            $("#receotionTime").val(receotionTime);
+                            $("#ceremonyTime").val(ceremonyTime);
+                            $("#weddingPlace").val(place);
+
+                            $("#btn_createEvent").text("Update Event Details");
+                        }
+                    });
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+
+            
+
+            $('#weddingDate').datepicker({
+                uiLibrary: 'bootstrap4'
+            });
+
+            $('#receotionTime').timepicker({
+                uiLibrary: 'bootstrap4'
+            });
+            
+            $('#ceremonyTime').timepicker({
+                uiLibrary: 'bootstrap4'
+            });
+
+            $("#btn_createEvent").click(function () {
+                var groomName = $("#groomName").val();
+                var brideName = $("#brideName").val();
+                var weddingPlace=$("#weddingPlace").val();
+                var weddingDate=$("#weddingDate").val();
+                var receotionTime=$("#receotionTime").val();
+                var ceremonyTime=$("#ceremonyTime").val();
+
+                var database = firebase.database();
+                
+                if (groomName.length > 0 && brideName.length > 0 && weddingPlace.length>0 && weddingDate.length>0 && receotionTime.length>0 && ceremonyTime.length>0) {
+                    database.ref("users/"+userid+"/event/eventDetail").set({
+                        groomName:groomName,
+                        brideName:brideName,
+                        weddingPlace:weddingPlace,
+                        weddingDate:weddingDate,
+                        receotionTime:receotionTime,
+                        ceremonyTime:ceremonyTime
+                    }).then(function(){
+                        swal({
+                            title: "Done",
+                            text: "All set. Let's Start Managing Your Marriage.",
+                            icon: "success",
+                        }).then(function () {
+                            redirectToDashboard();
+                        })
+                    })
+                }
+                else {
+                    swal({
+                        title: "Oh!!! Wait",
+                        text: "We require all information to create a event",
+                        icon: "warning"
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+</html>
