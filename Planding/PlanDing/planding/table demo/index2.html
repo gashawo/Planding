@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        .list-group,.list-group2 {
+            min-height: 100px;
+            background: #ccc;
+        }
+        .circleTbl{
+            height: 300px;
+            width:300px;
+            padding:30px
+        }
+        .circleTbl>.tbl>ul>.list-group-item{
+            color:#F00 !important;
+            width:auto;
+            display: list-item;
+            *display: list-item;
+            background:white;
+            float: left;
+            padding: 5px;
+            list-style-type: none;
+            margin:1%   
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 px-1 bg-secondary">
+                <div class="py-2 sticky-top flex-grow-1">
+                    <button id="addTable" class="mb-2">Add Table</button>
+                    <div class="input-field">
+                        <input type="text" id="guestName">
+                        <button id="addGuest">Add Guest</button>
+                    </div>
+                    <div class="card-body guestListContainer">
+                        <ul class="list-group" id="guestList">
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col" id="main">
+                <div class="card rounded-circle circleTbl">
+                    <div class="card-body tbl">
+                            <ul class="list-group2" style=""></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#addTable").click(function () {
+                $("#main").append(
+                    '<div class="col-sm-3"><div class="card"><div class="card-body tbl"><ul class="list-group"></ul></div></div></div>'
+                    );
+                $(".tbl ul").sortable({
+                    revert: 'invalid',
+                    connectWith: ".guestListContainer ul",
+                    items: "li.list-group-item"
+                })
+            });
+
+            $("#addGuest").click(function () {
+                if ($("#guestName").val().length > 0) {
+                    $("#guestList").append("<li class='list-group-item'>" + $("#guestName").val() +
+                        "</li>");
+                }
+            });
+
+            $(".tbl ul").sortable({
+                revert: 'invalid',
+                connectWith: ".guestListContainer ul,.tbl ul",
+                items: "li.list-group-item"
+            });
+
+            $('.guestListContainer ul').sortable({
+                revert: 'invalid',
+                connectWith: ".tbl ul",
+                items: "li.list-group-item"
+            });
+        });
+    </script>
+</body>
+
+</html>

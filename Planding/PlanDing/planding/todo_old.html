@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Guest Manager</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">התנתק</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="album.html" id="albumLink"> אלבום</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="board.html" id="boardLink">לוח טרמפים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">דחות</a>
+                </li>            
+                <li class="nav-item active">
+                    <a class="nav-link" href="todo.html">רשימת מטלות<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html">סידורי הושבה</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="manage_guest.html"> רשימת מוזמנים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html">יצירת/עדכון אירוע</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">בית</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h3> רשימת מטלות</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-9">
+                                <label>  מטלה</label>
+                                <div class="input-group">
+                                    <input type="text" id="task" class="form-control" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 mt-auto">
+                                <div class="input-group">
+                                    <input type="button" id="add-task" class="btn btn-success w-100" value=" הוסף מטלה">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h3 class="font-weight-light">מטלות ממתינות לביצוע:</h3>
+                            <ul class="list-group" id="pending-task">
+
+                            </ul>
+                        </div>
+                        <div class="mt-3">
+                            <h3 class="font-weight-light">מטלות שהושלמו:</h3>
+                            <ul class="list-group" id="completed-task">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/firebase.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        var userid = "";
+
+        //Array so we can use because we store 1,2,3 in datbase
+        var relation = ["Groom Family", "Groom Friend", "Groom Work", "Bride Family", "Bride Friend", "Bride Work"];
+
+        function updateUI() {
+            var database = firebase.database();
+            var ref = database.ref("users/" + userid + "/tasks");
+
+            ref.on('child_added', function (data) {
+                //Add to pending task 
+                if (data.val().status == 0)
+                    $("#pending-task").append("<li class='list-group-item'><input type='checkbox' class='pending-item mr-2' value='" + data.key + "'>" + data.key + "</li>");
+                //Add to complete task
+                if (data.val().status == 1)
+                    $("#completed-task").append("<li class='list-group-item text-secondary'><del>" + data.key + "</del></li>");
+            });
+
+        }
+
+        //Change the status of task to 1 and remove that pending task and add it to completed task
+        $("#pending-task").on('click', '.pending-item', function () {
+            var database = firebase.database();
+            var ref = database.ref("users/" + userid + "/tasks");
+
+            ref.child($(this).val()).set({ status: 1 });
+
+            $(this).parent().remove();
+            $("#completed-task").append("<li class='list-group-item text-secondary'><del>" + $(this).val() + "</del></li>");
+
+        });
+
+        $(document).ready(function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    userid = user.uid;
+                    $("#boardLink").attr("href","board.html?user="+userid);
+                    $("#albumLink").attr("href","album.html?user="+userid);
+                    updateUI();
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+
+
+            //Add task to firebase and default mark it as pending
+            $("#add-task").click(function () {
+                var task = $("#task").val();
+
+                if (task.length > 0) {
+                    var database = firebase.database();
+                    var ref = database.ref("users/" + userid + "/tasks");
+
+                    ref.child(task).set({ status: 0 });
+
+                    $("#task").val("");
+                }
+                else {
+                    swal({
+                        title: "!!!אופס",
+                        text: "שחת לרשום מטלה",
+                        icon: "warning"
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

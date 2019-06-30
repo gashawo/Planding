@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Coming Form</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        #couple-name,
+        #couple-name-small {
+            font-family: 'Dancing Script', cursive;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="invite-cover" class="p-md-5">
+        <div class="row h-100">
+            <div class="col-sm-12 col-lg-6 offset-lg-3 my-auto">
+                <div class="card bg-white rounded" style="max-height: 80vh">
+                    <div class="card-header bg-white border-0 text-center text-uppercase font-weight-regular">
+                        <h1 class="display-4 d-none d-md-block" id="couple-name"> שם הזוג</h1>
+                        <h1 class="d-sm-block d-md-none" id="couple-name-small">
+                            Ab
+                        </h1>
+                    </div>
+                    <div class="card-body" style="overflow-y: auto">
+                        <div class="font-italic" id="msg">
+
+                        </div>
+                        <hr>
+                        <div class="form-group mt-2">
+                            <label> מספר פלאפון</label>
+                            <input type="text" id="mobileno" class="form-control">
+                        </div>
+                        <div id="coming_form" class="d-none">
+                            <div class="form-group mt-2">
+                                <label> אוכל מועדף</label>
+                                <select class="custom-select form-control" id="food">
+                                    <option value="0" selected disabled> בחר מנה מועדפת</option>
+                                    <option value="1">בשר</option>
+                                    <option value="2">צמחוני/טבעוני</option>
+                                    <option value="3">ילדים</option>
+                                    <option value="4">אחר</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label> מוזיקה מועדפת</label>
+                                <select class="custom-select form-control" id="music">
+                                    <option value="0" selected disabled> בחר מוזיקה מועדפת</option>
+                                    <option value="1">מזרחית</option>
+                                    <option value="2">היפ-הופ</option>
+                                    <option value="3">אמהרית</option>
+                                    <option value="4">ישראלית ים תיכונית</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ברכות</label>
+                            <textarea id="blessing_msg" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="form-group mt-2">
+                            <button class="btn btn-success" id="confirm">
+                                שלח
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/firebase.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+
+        //Parser Of Url Param
+        //It will get current full url and then parse the parameter
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        //get user and isComming parameter from url
+        userid = getUrlParameter("user");
+        isComming = parseInt(getUrlParameter("isComming"));
+
+        $(document).ready(function () {
+            //verify userid paramter is there
+            if (userid) {
+                
+                var database = firebase.database();
+                //fetch detail and show in particual div
+                database.ref("users/" + userid + "/event/eventDetail").once('value').then(function (snapshot) {
+                    if (snapshot.val() != null) {
+                        var details = snapshot.val();
+                        $("#couple-name").html(details.groomName + "<i class='far fa-heart ml-3 mr-3'></i>" + details.brideName);
+                        $("#couple-name-small").html(details.groomName + "<i class='far fa-heart ml-3 mr-3'></i>" + details.brideName);
+                    }
+                    else {
+                        swal({
+                            title: "!!!אופס",
+                            text: "לא מצאנו אירוע",
+                            icon: "error"
+                        })
+                    }
+                });
+            }
+            else {
+                //Show error if no user id is there
+                swal({
+                    title: "!!!אופס",
+                    text: " לא מצאנו שום אירוע...אולי הלינק לא טוב",
+                    icon: "error"
+                }).then(function () {
+                    redirectToDashboard();
+                })
+            }
+
+            //Hide somefield based on isComming or not + display particular message
+            if (isComming == 1) {
+                $("#coming_form").removeClass("d-none");
+                $("#msg").html("נא מלא את השדות הבאים כדי שננסה לקלוע לטעמך");
+            }
+            else {
+                $("#msg").html("מצטערים לשמוע שלא תוכל להגיע. נא רשום מספר פלאפון לצורך לאשר שלא מגיע");
+            }
+
+            $("#confirm").click(function () {
+                var m = $("#mobileno").val()
+                if (m.length > 0) {
+                    var mobile = $("#mobileno").val();
+
+                    database.ref("users/" + userid + "/event/guests/" + mobile).once('value').then(function (snapshot) {
+                        //verify mobileno is added in guest list or not
+                        if (snapshot.val() != null) {
+                            //verify status is not set
+                            if (snapshot.val().status == -1) {
+                                //verify status is comming and set  the value 
+                                if (isComming == 1) {
+
+                                    if ($("#music").val() > 0 && $("#food").val() > 0 && $("#blessing_msg").val().length>0) {
+                                        database.ref("users/" + userid + "/event/guests/").child(mobile).update({
+                                            music: $("#music").val(),
+                                            food: $("#food").val(),
+                                            blessing:$("#blessing_msg").val(),
+                                            status: isComming
+                                        }).then(() => {
+                                            swal({
+                                                title: "Success",
+                                                text: "Submitted Successfully",
+                                                icon: "success"
+                                            })
+                                        });
+                                    }
+                                    else {
+                                        swal({
+                                            title: "!!!אופס",
+                                            text: "נא בחר מנה ומוזיקה מועדפת, כדי שנוכל לקלוע לטעמך",
+                                            icon: "warning"
+                                        })
+                                    }
+                                }
+                                //set guest is not comming
+                                else {
+                                    database.ref("users/" + userid + "/event/guests/").child(mobile).update({ status: isComming,
+                                            blessing:$("#blessing_msg").val() }).then(() => {
+                                        swal({
+                                            title: "Success",
+                                            text: "Submitted Successfully",
+                                            icon: "success"
+                                        })
+                                    });
+                                }
+                            }
+                            //show message if status is 0 or 1
+                            else {
+                                alert("You already submitted your entry");
+                            }
+                        }
+                        //show error if user not found with mobileno
+                        else {
+                            swal({
+                                title: "!!!אופס",
+                                text: "לא נמצא מוזמן שמקושר למספר הטלפון הזה",
+                                icon: "error"
+                            })
+                        }
+                    });
+                }
+                //Forgot to fill mobileno
+                else {
+                    swal({
+                        title: "!!!אופס",
+                        text: "נא מלא את מספר פלאפון",
+                        icon: "warning"
+                    })
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

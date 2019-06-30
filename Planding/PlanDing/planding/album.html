@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Upload Album</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\sweetalert2.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">התנתק</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="album.html" id="albumLink"> אלבום <span class="sr-only">(current)</span></a>
+                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="board.html" id="boardLink">לוח טרמפים</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link" href="reports.html">דוחות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">רשימת מטלות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html"> סידורי הושבה</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="manage_guest.html"> רשימת מוזמנים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html"> יצירת/עדכון אירוע</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">בית</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Empty Div Where Photos Will Be Loaded-->
+    <div class="card-columns mt-2" id="album">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+    <script src="js/dropzone.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-storage.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+
+        //Parser Of Url Param
+        //It will get current full url and then parse the parameter
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        //Getting "user" param from url
+        userid = getUrlParameter("user");
+
+        $(document).ready(function () {
+            //Creating Link so that can share(we don't have userid without login...so we use userid which pass as param)
+            firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user);
+                if (!user) {
+                    $("#navbarSupportedContent").html("");
+                }
+            });
+            $("#boardLink").attr("href","board.html?user="+userid);
+            $("#albumLink").attr("href","album.html?user="+userid);
+            var storageRef = firebase.storage().ref(userid+"/");
+
+            console.log(storageRef.listAll());
+            
+            //Get All Storage Files and then get download url and than append to div
+            storageRef.listAll().then(function (result) {
+                result.items.forEach(function (imageRef) {
+                    imageRef.getDownloadURL().then(function(url) {
+                        $("#album").append("<div class='card'><div class='card-img-top'><img class='img-fluid' src='" + url + "'></div><div class='card-body'><a target='_blank' href='"+url+"'>View Photo</a></div></div>")
+                    }).catch(function(error) {
+                        // Handle any errors
+                    });
+                });
+            }).catch(function (error) {
+            });
+            
+        });
+    </script>
+
+</body>
+
+</html>

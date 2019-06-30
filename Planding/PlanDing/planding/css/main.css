@@ -1,0 +1,75 @@
+.background-section {
+    background: url('../images/banner.jpg'), #ffffff66 no-repeat center center fixed;
+    background-blend-mode: overlay;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.card {
+    text-align: right;
+
+}
+
+.card-header{
+    color: #F95959;
+}
+
+
+.form-group {
+    text-align: right;
+    direction: rtl;
+}
+
+
+
+#invite-cover {
+    background: url('../images/banner-invited.jpg'), #00000099 no-repeat center center fixed;
+    background-blend-mode: overlay;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+    overflow: hidden;
+}
+.navbar-brand img{
+    height:50px;
+}
+
+.dashboard-header{
+    background: url('../images/banner.jpg'), #00000099 no-repeat center center fixed;
+    background-blend-mode: overlay;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+}
+
+
+#mobile_check {
+    text-align: right;
+}
+
+/********* uploadAlbum text area *************/
+
+
+
+/********* end uploadAlbum text area *************/
+
+.custom-file-label {
+    text-align: center;
+}
+
+
+#task {
+    direction: rtl;
+}
+
+#mobileno, #guestname, #relation ,#status  {
+    direction: rtl;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Upload Album</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\sweetalert2.min.css">
+</head>
+
+<body>
+    <section class="background-section">
+        <div class="row h-100">
+            <div class="col-sm-12 col-lg-4 offset-lg-4 my-auto">
+                <div class="card bg-white rounded">
+                    <div class="card-header bg-white text-center text-uppercase font-weight-regular">
+                        <img src="./images/logo.png" alt="" height="50">
+                    </div>
+                    <div class="card-body">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" multiple accept="image/*">
+                            <label class="custom-file-label" for="customFile">בחר קובץ</label>
+                        </div>
+                        <div id="progressBarContainer" class="mt-3">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+    <script src="js/dropzone.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-storage.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        userid = getUrlParameter("user");
+        
+        $(document).ready(function () {
+            var database = firebase.database();
+
+            //On file select. Itereate each file and upload and show progress of each file
+            $("#customFile").on('change', function(e){ 
+                var uploadedBy=$("#mobile").val();
+                for (var i = 0; i < e.target.files.length; i++) {
+                    var imageFile = e.target.files[i];
+                    var progressBar=$($.parseHTML("<div class='progress mt-2'><div class='progress-bar p-2'>"+imageFile.name+"</div></div>"));
+
+                    $("#progressBarContainer").append(progressBar);
+                    
+                    uploadImageAsPromise(imageFile,progressBar,uploadedBy);
+                    
+                }
+            });
+
+            //upload to userid directory
+            function uploadImageAsPromise (imageFile,progressBar,uploadedBy) {
+                var metadata={customMetadata:{uploadedBy:uploadedBy}}
+                return new Promise(function (resolve, reject) {
+                    var storageRef = firebase.storage().ref(userid+"/"+imageFile.name);
+
+                    var task = storageRef.put(imageFile,metadata);
+
+                    task.on('state_changed',
+                        function progress(snapshot){
+                            var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100;
+                            progressBar.children().css("width",percentage+"%");
+                        },
+                        function error(err){
+
+                        },
+                        function complete(){
+                            var downloadURL = task.snapshot.downloadURL;
+                            progressBar.fadeOut(2000).remove();
+                        }
+                    );
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

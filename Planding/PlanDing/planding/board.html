@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Message Board</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\sweetalert2.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">התנתק</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link" href="album.html" id="albumLink"> אלבום</a>
+                </li>
+                <li class="nav-item active">
+                     <a class="nav-link" href="board.html" id="boardLink">לוח טרמפים<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">דוחות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">רשימת מטלות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html"> סידורי הושבה</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="manage_guest.html"> רשימת מוזמנים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html"> יצירת/עדכון פרטי אירוע</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">בית</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h3>הצע/בקש טרמפ לאירוע</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label> מספר פלאפון</label>
+                            <input type="text" id="mobileno" class="form-control">
+                        </div>
+                        <div class="row">       
+                            <div class="col-sm-12 col-lg-4">
+                                <div class="form-group">
+                                    <label> מאיפה</label>
+                                    <input type="text" id="place" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>מקומות פנויים</label>
+                                    <input type="number" id="peopleSpace" class="form-control" min="1" max="5">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label>שם</label>
+                                        <input type="text" id="nam" class="form-control">
+                                    </div>
+                                </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>  שעת יציאה לאירוע</label>
+                                    <input id="timeLeave" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>שעת חזרה מהאירוע</label>
+                                    <input id="timeCome" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>הערות</label>
+                                    <textarea id="notes" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" id="leaveMsg">פרסם</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs nav-fill card-header-tabs" id="myTab">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#allPost" data-toggle="tab"> כל הטרפים</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tableArrangement" data-toggle="tab"> טרמפים שלי</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane container active" id="allPost">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>הערות</th>
+                                            <th>  שעת יציאה/חזרה מהאירוע</th>
+                                            <th> מקומות פנויים</th>
+                                            <th>מאיפה</th>
+                                            <th> פרטים אישיים</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="messages">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane container fade" id="tableArrangement">
+                                <div class="input-group mb-3" id="inputMobile">
+                                    
+                                    <input id="mobile_check" type="text" class="form-control" placeholder="הכנס מספר פלאפון">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="submit" id="getPost"> חפש </button> 
+                                    </div>
+                                </div>
+                                <div class="progress d-none" id="myPostPB">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%"></div>
+                                </div>
+                                <table class="table d-none" id="myPostTbl">
+                                    <thead>
+                                            <tr>
+                                                <th>פעולה</th>
+                                                <th>הערות</th>
+                                                <th>שעת יציאה/חזרה מהאירוע</th>
+                                                <th> מקומות פנויים</th>
+                                                <th>מאיפה</th>
+                                                <th> פרטים אישיים</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody id="myPost">
+                                        <tr id="noPost">
+                                            <td colspan="4" class="text-center text-secondary"><h4> אין טרמפים</h4></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+    <script src="js/dropzone.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        userid = getUrlParameter("user");
+        var database = firebase.database();
+
+        $(document).ready(function () {
+            //Tab Navigation Functionality
+            $("#myTab li:eq(0) a").tab('show');
+            $('a[data-toggle="tab"]').on('shown', function (e) {
+                e.target // active tab
+                e.relatedTarget // previous tab
+            })
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user);
+                if (!user) {
+                    $("#navbarSupportedContent").html("");
+                }
+            });
+
+            //Creating Link so that can share(we don't have userid without login...so we use userid which pass as param)
+            $("#boardLink").attr("href", "board.html?user=" + userid);
+            $("#albumLink").attr("href", "album.html?user=" + userid);
+
+
+            //TimePicker initialize
+            $('#timeLeave').timepicker({
+                uiLibrary: 'bootstrap4'
+            });
+            $('#timeCome').timepicker({
+                uiLibrary: 'bootstrap4'
+            });
+
+
+            //Fetch All Post and Display on All Post Tab(First Tab)
+            function getAllPost(){
+                $("#messages").html("");
+                database.ref("users/" + userid + "/event/messages").orderByChild("timestamp").once('value').then(function (snapshot) {
+                    if (snapshot.val()) {
+                        $.each(snapshot.val(), function (key, value) {
+                            $("#messages").append("<tr><td>"+value.note+"</td><td>" + value.timeLeave + " - "+value.timeCome + "</td><td>" + value.peopleSpace + "</td><td>" + value.from + "</td><td>" + value.nam + " : " + value.mobile + "</td></tr>");
+                        });
+                    }
+                });
+            }
+
+            getAllPost();
+
+            //Fetching user realted post and display in My Post Tab(second tab)
+            $("#getPost").click(function(){
+                //Show progress and hide the input
+                $("#myPostPB").removeClass("d-none");
+                $("#myPost").html("");
+                $("#inputMobile").addClass("d-none");
+
+                //Get post
+                database.ref("users/" + userid + "/event/messages").orderByChild("timestamp").once('value').then(function (snapshot) {
+                    //Hide Progress and make table visible to show data
+                    $("#myPostTbl").removeClass("d-none");
+                    $("#myPostPB").addClass("d-none");
+                    $(this).parent().parent().fadeOut();
+
+                    
+                    if (snapshot.val()) {
+                        $("#noPost").fadeOut();
+                        //Append Post
+                        $.each(snapshot.val(), function (key, value) {
+                            if(value.mobile==$("#mobile_check").val())
+                                $("#myPost").append("<tr><td class='text-center'><i class='far fa-trash-alt text-danger' data-id='"+key+"'></i></td> <td>"+value.note+"</td><td>" + value.timeLeave + " - "+value.timeCome + "</td><td>" + value.peopleSpace + "</td><td>" + value.from + "</td><td>" + value.nam + " : " + value.mobile + "</td></tr>");
+                                
+                        });
+                        //Delete current row and its data from firebase
+                        $(".fa-trash-alt").click(function(){
+                            alert($(this).data("id"));
+                            database.ref("users/"+userid+"/event/messages/"+$(this).data("id")).remove().then(()=>{
+                                $(this).parent().parent().remove();
+                                getAllPost();
+                            });
+                        })
+                    }
+                    else
+                    {
+                        //Show no post message
+                        $("#noPost").fadeIn();
+                    }
+                });
+            })
+
+            //insert new message
+            $("#leaveMsg").click(function () {
+                var nam=$("#nam").val();
+                var mobile = $("#mobileno").val();
+                var from = $("#place").val();
+                var peopleSpace = $("#peopleSpace").val();
+                var timeLeave = $("#timeLeave").val();
+                var timeCome = $("#timeCome").val();
+
+                //Validation of blank
+                if (nam.length>0 && mobile.length > 0 && from.length > 0 && peopleSpace.length > 0 && timeLeave.length > 0) {
+
+                    //Set note variable empty string or user input
+                    if($("#notes").val().length>0)
+                        var note=$("#notes").val();
+                    else
+                        var note="";
+
+                    database.ref("users/" + userid + "/event/messages").push({mobile:mobile, nam:nam, from: from, peopleSpace: peopleSpace, timeLeave: timeLeave,timeCome:timeCome,note:note }).then(() => {
+                        swal({
+                            title: "Success", 
+                            text: "הנתונים נשמרו בהצלחה",
+                            icon: "success"
+                        })
+                    });
+                }
+                //Field Missing Error
+                else {
+                    swal({
+                        title: "!!!אופס",
+                        text: "נא מלא את כל השדות",
+                        icon: "warning"
+                    })
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Guest Manager</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">התנתק</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="album.html" id="albumLink">אלבום</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="board.html" id="boardLink">לוח טרמפים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">דוחות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">רשימת מטלות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html">סידורי הושבה</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="manage_guest.html">רשימת מוזמנים<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html">יצירת/עדכון אירוע</a>
+                </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">בית</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <label class="btn btn-primary">
+                                    <i class="fas fa-file-import" id="btn_excel"></i> יבא מאקסל <input type="file" hidden id="importXls"
+                                        accept=".xls,.xlsx">
+                                </label>
+                                <label class="btn btn-success" id="export" id="btn_excel">
+                                    <i class="fas fa-file-export"></i> ייצא לאקסל
+                                </label>
+                                <label class="btn btn-danger" id="demoSheet" id="btn_excel">
+                                    דוגמאת אקסל
+                                </label>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                <div class="float-right">
+                                        &emsp; מגיעים &nbsp; :  <span id="comingCount" class="mr-3">0</span>
+                                        &emsp; לא מגיעים &nbsp; : <span id="notComingCount" class="mr-3">0</span>
+                                        &emsp; לא החליטו &nbsp; : &emsp;<span id="notDecidedCount">0</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label>סטאטוס</label>
+                                <div class="input-group">
+                                    <select class="custom-select" id="status">
+                                        <option value="-1" selected>לא החליט </option>
+                                        <option value="0"> לא מגיע</option>
+                                        <option value="1">מגיע</option>                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label>קירבה</label>
+                                <div class="input-group">
+                                    <select class="custom-select" id="relation">
+                                        <option value="0" disabled selected>בחר קירבה</option>
+                                        <optgroup label="חתן">
+                                            <option value="1">משפחה</option>
+                                            <option value="2">חברים</option>
+                                            <option value="3">עבודה</option>
+                                            <option value="4">צבא</option>
+                                        </optgroup>
+                                        <optgroup label="כלה">
+                                            <option value="5">משפחה</option>
+                                            <option value="6">חברים</option>
+                                            <option value="7">עבודה</option>
+                                            <option value="8">צבא</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label> מספר פלאפון</label>
+                                <div class="input-group">
+                                    <input type="text" id="mobileno" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <label> שם מוזמן</label>
+                                <div class="input-group">
+                                    <input type="text" id="guestname" class="form-control" autofocus>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-center p-2">
+                                <div class="input-group">
+                                    <input type="button" id="add-guest" class="btn btn-success w-100" value="הוסף מוזמן">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <button class="btn btn-danger mb-3" id="deleteSelected">מחק שנבחרו</button>
+                        <button class="btn btn-danger mb-3 ml-3" id="deleteAll">מחק הכל</button>
+                        <table class="table table-hover" id="mainTbl">
+                                <thead>
+                                        <tr>
+                                            <!-- <th>בחר</th> -->
+                                            <th>סטאטוס</th>
+                                            <th>קירבה</th>
+                                            <th>מספר פלאפון</th>
+                                            <th> שם מלא</th>
+                                            <th>פעולה</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="guest-list">
+        
+                                    </tbody>
+                                </table>
+                                <!--This table will not display but exported-->
+                                <table class="table table-hover d-none" id="exportTbl">
+                                    <thead>
+                                        <tr>
+                                            <th>שם מלא</th>
+                                            <th>מספר פלאפון</th>
+                                            <th>קירבה</th>
+                                            <th>סטאטוס</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="guest-list2">
+        
+                                    </tbody>
+                                </table>
+                                <!--This is demo file table which also not display-->
+                                <table class="table table-hover d-none" id="demoSheetTbl">
+                                    <thead>
+                                        <tr>
+                                            <th>שם מלא</th>
+                                            <th>מספר פלאפון</th>
+                                            <th>קירבה</th>
+                                            <th>סטאטוס</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="guest-list3">
+        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/sweetalert.min.js"></script>
+        <script src="js/gijgo.min.js" type="text/javascript"></script>
+    
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+    
+        <script src="js/main.js"></script>
+    
+        <script src="js/firebase.js"></script>
+    
+        <script src="js/xlsx.full.min.js"></script>
+    
+        <script>
+            firebase.initializeApp(firebaseConfig);
+            var userid = "";
+    
+            var relation = ["משפחה חתן", "חברים חתן", "עבודה חתן", "צבא חתן","משפחה כלה", "חברים כלה", "עבודה כלה","צבא כלה"];
+    
+            function updateUI() {
+                var database = firebase.database();
+                var ref = database.ref("users/" + userid + "/event/guests");
+    
+                var comingCount=0;
+                var notComingCount=0;
+                var notDecidedCount=0;
+    
+                /*When new child added this event will fire*/
+                ref.on('child_added', function (data) {
+                    var relation = ["משפחה חתן", "חברים חתן", "עבודה חתן", "צבא חתן","משפחה כלה", "חברים כלה", "עבודה כלה","צבא כלה"];
+                    var icon = "";
+                    var textStatus = "לא החליט";
+    
+                    if (parseInt(data.val().status) == 1) {
+                        textStatus = "מגיע";
+                        icon = "<td><i class='fas text-success fa-check'></i></td>";
+                        comingCount++;
+                        $("#comingCount").text(comingCount);
+                    }
+                    else if (parseInt(data.val().status) == 0) {
+                        textStatus = "לא מגיע";
+                        icon = "<td><i class='fas text-danger fa-times'></i></td>";
+                        notComingCount++;
+                        $("#notComingCount").text(notComingCount);
+                    }
+                    else {
+                        icon = "<td><i class='fas fa-question'></i></td>";
+                        notDecidedCount++;
+                        $("#notDecidedCount").text(notDecidedCount);
+                    }
+                    data.val().relation = parseInt(data.val().relation);
+                    console.log(data.val().relation+"-"+relation[data.val().relation - 1]);
+                    //Appending data to display table body
+                    $("#guest-list").append("<tr data-id='" +  data.key +  "'>" + icon + "<td>" +  relation[data.val().relation - 1] + "</td><td>" + data.key + "</td><td>" + data.val().fullname +
+                        "</td><td><button class='btn btn-danger delete'><i class='mr-3 fas fa-times'></i>Delete</button></td><td class='form-check'><input type='checkbox' class='form-check-input selectedGuest'><label></label></td>");
+    
+      
+                    // //Appending data to exportTable body  
+                    // $("#guest-list2").append("<tr data-id='" + data.key + "'><td>" + textStatus + "</td><td>" +  relation[data.val().relation - 1] +
+                    //     "</td><td>" + data.key + "</td><td>" + data.val().fullname );
+
+
+                    //Appending data to exportTable body
+                    $("#guest-list2").append("<tr><td>" + data.val().fullname + "</td><td>" +
+                    data.key + "</td><td>" + relation[data.val().relation - 1] + "</td><td>" + textStatus + "</td>");
+
+
+
+
+                    //Ask for delete and on confirmation delete the row and from firebase also
+                    $(".delete").click(function () {
+                        swal(
+                            {
+                                title: "!!!מחק",
+                                text: "?אתה בטוח שאתה רוצה למחוק מוזמן זה ",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                            }
+                        ).then((isConfirm) => {
+                            if (isConfirm) {
+                                var database = firebase.database();
+                                var ref = database.ref("users/" + userid + "/event/guests");
+    
+                                var key = $(this).parent().parent().data("id");
+    
+                                ref.child(key).remove();
+                                $(this).parent().parent().remove();
+                                $("#guest-list2").find("tr[data-id='"+key+"']").remove();
+                            }
+                        });
+                    });
+                });
+            }
+    
+            //Excel file import
+            function handleFile(e) {
+                var files = e.target.files, f = files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, { type: 'array' });
+    
+                    var first_sheet_name = workbook.SheetNames[0];
+    
+                    const sheet = workbook.Sheets[first_sheet_name];
+                    var range = XLSX.utils.decode_range(sheet['!ref']);
+    
+                    var database = firebase.database();
+                    var ref = database.ref("users/" + userid + "/event/guests");
+    
+                    successImportCount = 0;
+                    failedImportCount = 0;
+                    failedImportRowsNo = [];
+    
+                    for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                        const fullname = sheet[XLSX.utils.encode_cell({ r: rowNum, c: 0 })].v;
+                        const mobileno = sheet[XLSX.utils.encode_cell({ r: rowNum, c: 1 })].v;
+                        relation = sheet[XLSX.utils.encode_cell({ r: rowNum, c: 2 })].v;
+                        status = sheet[XLSX.utils.encode_cell({ r: rowNum, c: 3 })].v;
+    
+                        if(relation.indexOf("חתן") !=-1)
+                        {
+                            if(relation.indexOf("משפחה") !=-1)
+                            {
+                                relation = 1;
+                            }
+                            else if(relation.indexOf("חברים") !=-1)
+                            {
+                                relation = 2;
+                            }
+                            else if(relation.indexOf("עבודה") !=-1)
+                            {
+                                relation = 3;
+                            }
+                            else
+                            {
+                                relation = 4;
+                            }
+                        }
+                        else
+                        {
+                            if(relation.indexOf("משפחה") !=-1)
+                            {
+                                relation = 5;
+                            }
+                            else if(relation.indexOf("חברים") !=-1)
+                            {
+                                relation = 6;
+                            }
+                            else if(relation.indexOf("עבודה") !=-1)
+                            {
+                                relation = 7;
+                            }
+                            else
+                            {
+                                relation = 8;
+                            }
+                        }
+    
+                        if(status.indexOf("לא מגיע")!=-1)
+                        {
+                            status = 0
+                        }
+                        else if(status=="מגיע")
+                        {
+                            status=1
+                        }
+                        else
+                        {
+                            status = -1
+                        }
+    
+                        if (fullname != undefined && mobileno != undefined && relation != undefined && status != undefined) {
+                            data = { fullname: fullname, relation: relation, status: status };
+                            ref.child(mobileno).set(data);
+                            successImportCount++;
+                        }
+                        else {
+                            failedImportCount++;
+                            failedImportRowsNo.push(rowNum + 1);
+                        }
+                        var text = `Successfully Imported Contact : ${successImportCount}\nFailed Count : ${failedImportCount}`;
+                        if (failedImportCount > 0) {
+                            text += `\n Failed To Import Row Number[s] ${failedImportRowsNo.join()} `
+                        }
+                        swal(
+                            {
+                                title: "Import Completed",
+                                text: text,
+                                icon: "success",
+                            }
+                        )
+                    }
+                };
+                reader.readAsArrayBuffer(f);
+            }
+    
+            //Export Excel File
+            function doit(ele, type, fn, dl) {
+                var elt = document.getElementById(ele);
+                var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet JS" });
+                return dl ?
+                    XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                    XLSX.writeFile(wb, fn || ('guest.' + (type || 'xlsx')));
+            }
+    
+            $(document).ready(function () {
+                var importEle = document.getElementById("importXls");
+                importEle.addEventListener('change', handleFile, false);
+    
+                //Redirect if not login else set navbar link
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        userid = user.uid;
+                        $("#boardLink").attr("href","board.html?user="+userid);
+                        $("#albumLink").attr("href","album.html?user="+userid);
+                        updateUI();
+                    } else {
+                        window.location.href = "login.html";
+                    }
+                });
+    
+                //exportTbl will be download
+                $("#export").click(function () {
+                    doit("exportTbl", "xlsx");
+                });
+    
+                //Demosheet will be download
+                $("#demoSheet").click(function () {
+                    doit("demoSheetTbl", "xlsx");
+                })
+    
+                $("#add-guest").click(function () {
+                    var fullname = $("#guestname").val();
+                    var mobileno = $("#mobileno").val();
+                    var relation = $("#relation").val();
+    
+                    //All filled
+                    if (fullname.length > 0 && mobileno.length > 0 && relation != 0) {
+                        var database = firebase.database();
+                        var ref = database.ref("users/" + userid + "/event/guests");
+    
+                        var status=parseInt($("#status").val())
+    
+                        data = { fullname: fullname, relation: relation, status: status };
+    
+                        ref.child(mobileno).once('value').then(function (snapshot) {
+                            //If mobile no has already in database
+                            if (snapshot.val()) {
+                                //Show warning and ask for update
+                                swal(
+                                    {
+                                        title: "המוזמן קיים",
+                                        text: "?מוזמן עם מספר פלאפון זה כבר קיים, תרצה לעדכן",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true,
+                                    }
+                                ).then((isConfirm) => {
+                                    //Update the data
+                                    if (isConfirm) {
+                                        ref.child(mobileno).set(data);
+                                        var $row = $('tr[data-id="' + mobileno + '"]');
+                                        $row.find("td:eq(1)").text(data.fullname);
+                                        $row.find("td:eq(2)").text(mobileno);
+                                    } else {
+                                        swal({
+                                            title: "עודכן בהצלחה",
+                                            text: "עדכון מוזמן בוטל",
+                                            icon: "info"
+                                        });
+                                    }
+                                });
+                            }
+                            else {
+                                //Empty the data
+                                ref.child(mobileno).set(data).then(()=>{
+                                    $("#guestname").val("");
+                                    $("#mobileno").val("");
+                                    $("#relation").val("0");
+                                    $("#status").val("-1");
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "רגע!!! חכה",
+                            text: "שכחת למלא את אחת מהשדות",
+                            icon: "warning"
+                        })
+                    }
+                });
+    
+                $("#deleteSelected").click(function(){
+                    swal(
+                        {
+                            title: "!!!מחק",
+                            text: "?בטוח שתרצה למחוק מוזמן זה ",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }
+                    ).then((isConfirm) => {
+                        if (isConfirm) {
+                            var database = firebase.database();
+                            var ref = database.ref("users/" + userid + "/event/guests");
+                            $(".selectedGuest").each(function(){
+                                if($(this).is(":checked"))
+                                {
+                                    var key = $(this).parent().parent().data("id");
+    
+                                    ref.child(key).remove();
+                                    $(this).parent().parent().remove();
+                                    $("#guest-list2").find("tr[data-id='"+key+"']").remove();
+                                }
+                            })
+                        }
+                    });
+                });
+    
+                $("#deleteAll").click(function(){
+                    swal(
+                        {
+                            title: "!!!מחק",
+                            text: "בטוח שתרצה למחוק את כל המוזמנים ",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }
+                    ).then((isConfirm) => {
+                        if (isConfirm) {
+                            var database = firebase.database();
+                            var ref = database.ref("users/" + userid + "/event/guests");
+                            $(".selectedGuest").each(function(){
+                                var key = $(this).parent().parent().data("id");
+    
+                                ref.child(key).remove();
+                                $(this).parent().parent().remove();
+                                $("#guest-list2").html("");
+                            })
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+    
+    </html>

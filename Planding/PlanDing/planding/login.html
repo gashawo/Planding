@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Login</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\sweetalert2.min.css">
+    
+</head>
+
+<body>
+    <section class="background-section">
+        <div class="row h-100">
+            <div class="col-sm-12 col-lg-4 offset-lg-4 my-auto">
+                <div class="card bg-white rounded">
+                    <div class="card-header bg-white text-center text-uppercase font-weight-regular">
+                        <img src="./images/logo.png" alt="" height="50">
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label> כתובת אימייל</label>
+                            <input type="text" id="email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>סיסמא</label>
+                            <input type="password" id="password" class="form-control" />
+                        </div>
+                        <div class="form-group text-center mt-1">
+                            <button class="btn btn-lg btn-primary text-uppercase" id="btn_login">היכנס<i
+                                    class="ml-1 fas fa-sign-in-alt"></i></button>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <button class="btn btn-danger w-100 text-uppercase mb-2" id="btn_googleLogin">
+                                <i class="mr-1 fab fa-google"></i>
+                                היכנס עם גוגל
+                            </button>
+                            <a href="register.html" class="text-uppercase">הירשם עם אימייל</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+
+    <script src="js/firebase.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+
+        $(document).ready(function () {
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user);
+                if (user) {
+                    redirectToDashboard();
+                }
+            });
+
+            $("#btn_login").click(function () {
+                var email = $("#email").val();
+                var password = $("#password").val();
+                //Check all field filled
+                if (email.length > 0 && password.length > 0) {
+                    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                        //Store authentication for future purpose
+                        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                            .then(function () {
+                                return firebase.auth().signInWithEmailAndPassword(email, password).then(data => {
+                                    redirectToDashboard();
+                                });
+                            })
+                            .catch(function (error) {
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+
+                                swal({
+                                    title: errorCode,
+                                    text: errorMessage,
+                                    icon: "warning"
+                                })
+                            });
+                    }
+                    else {
+                        swal({
+                            title: "!!!אופס",
+                            text: "אימייל לא תקין",
+                            icon: "warning"
+                        })
+                    }
+                }
+                else {
+                    swal({
+                        title: "!!!אופס",
+                        text: "שכחת למלא אחד מהשדות",
+                        icon: "warning"
+                    })
+                }
+            });
+
+            $("#btn_googleLogin").click(function () {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function (result) {
+                    // This gives you a Google Access Token. You can use it to access the Google API.
+                    var token = result.credential.accessToken;
+                    // The signed-in user info.
+                    var user = result.user;
+                    // ...
+                }).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                    // ...
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

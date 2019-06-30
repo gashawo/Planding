@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PlanDing - Registration</title>
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css\all.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-sm">
+        <a class="navbar-brand" href="#"><img src="images/logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">התנתק</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="album.html" id="albumLink"> אלבום</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="board.html" id="boardLink">לוח טרמפים</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="reports.html">דוחות<span class="sr-only">(current)</span></a>
+                </li>    
+                <li class="nav-item">
+                    <a class="nav-link" href="todo.html">רשימת מטלות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="table_management.html"> סידורי הושבה</a>
+                </li>                                   
+                <li class="nav-item ">
+                    <a class="nav-link" href="manage_guest.html"> רשימת מוזמנים</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="event_create.html"> יצירת/עדכון אירוע</a>
+                </li>            
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">בית</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="card mt-2 mb-2">
+            <div class="card-header">
+                <ul class="nav nav-tabs nav-fill card-header-tabs" id="myTab">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#guest" data-toggle="tab">העדפות מוזמנים</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tableArrangement" data-toggle="tab">סידורי הושבה</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blessing_msgs" data-toggle="tab">ברכות מוזמנים</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane container active" id="guest">
+                        <div class="row mb-4">
+                            <div class="col-sm-12 col-lg-6 text-center">
+                                <i class="fas fa-hamburger mr-2  &ensp;"  style="color: #F95959"></i>
+                                &ensp;בשרי :<span id="continentalCount" class="mr-3">0</span>
+                                &ensp;צמחוני/טבעוני :<span id="chineseCount" class="mr-3">0</span>
+                                &ensp;ילדים :<span id="indianCount" class="mr-3">0</span>
+                                &ensp;אחר : &ensp;<span id="thaiCount">0</span>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 text-center">
+                                <i class="fas fa-music mr-2  &ensp;" style="color: #F95959"></i>
+                                &ensp;אלקטרונית :<span id="popCount" class="mr-3">0</span>
+                                &ensp;היפ-הופ :<span id="rockCount" class="mr-3">0</span>
+                                &ensp;אמהרית :<span id="jazzCount" class="mr-3">0</span>
+                                &ensp; ים תיכונית : &ensp;<span id="classicCount">0</span>
+                            </div>
+                        </div>
+                        <table class="table hoverable d-none" id="guest-table">
+                            <thead>
+                                <tr>
+                                    <th> מוזיקה מועדפת</th>
+                                    <th>מנה מועדפת</th>
+                                    <th>סטאטוס</th>
+                                    <th> מספר פלאפון</th>
+                                    <th>שם מוזמן</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guest-table-body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane container fade" id="tableArrangement">
+                        <a href="table_management.html" class="btn btn-success mb-3"> סידורי הושבה</a>
+                        <ul class="list-group" id="tbl_arrangement">
+
+                        </ul>
+                    </div>
+                    <div class="tab-pane container fade" id="blessing_msgs">
+                        <ul class="list-group" id="blessingMsgs">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/firebase.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        var userid = "";
+
+        foods = ["בשרי", "צמחוני/טבעוני", "ילדים", "אחר"];
+        musics = ["אלקטרונית ", "היפ-הופ", "אמהרית", "ים-תיכונית"];
+
+        function detectmob() {
+            if (navigator.userAgent.match(/Android/i)
+                || navigator.userAgent.match(/webOS/i)
+                || navigator.userAgent.match(/iPhone/i)
+                || navigator.userAgent.match(/iPad/i)
+                || navigator.userAgent.match(/iPod/i)
+                || navigator.userAgent.match(/BlackBerry/i)
+                || navigator.userAgent.match(/Windows Phone/i)
+            ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        function updateUI() {
+            var database = firebase.database();
+
+            database.ref("users/" + userid + "/event/guests").once('value').then(function (snapshot) {
+                if (snapshot.exists()) {
+                    var items = snapshot.val();
+                    $("#guest-table").removeClass("d-none");
+                    count = 1;
+
+                    var continentFoodPreferedCount = 0;
+                    var chineseFoodPreferedCount = 0;
+                    var indianFoodPreferedCount = 0;
+                    var thaiFoodPreferedCount = 0;
+
+                    var popMusicPreferedCount = 0;
+                    var rockMusicPreferedCount = 0;
+                    var jazzMusicPreferedCount = 0;
+                    var classicMusicPreferedCount = 0;
+
+                    $.each(items, function (i, item) {
+                        if(!item)
+                            return true;
+                        try {
+                            switch (parseInt(item.food)) {
+                                case 1:
+                                    continentFoodPreferedCount++;
+                                    break;
+                                case 2:
+                                    chineseFoodPreferedCount++;
+                                    break;
+                                case 3:
+                                    indianFoodPreferedCount++;
+                                    break;
+                                case 4:
+                                    thaiFoodPreferedCount++;
+                                    break;
+                            }
+
+                            switch (parseInt(item.music)) {
+                                case 1:
+                                    popMusicPreferedCount++;
+                                    break;
+                                case 2:
+                                    rockMusicPreferedCount++;
+                                    break;
+                                case 3:
+                                    jazzMusicPreferedCount++;
+                                    break;
+                                case 4:
+                                    classicMusicPreferedCount++;
+                                    break;
+                            }
+                        }
+                        catch(err){
+
+                        }
+
+
+                        if (item.blessing) {
+                            $("#blessingMsgs").append("<li class='list-group-item p-0'><p class='m-2'>" + item.blessing + "</p><div class='bg-primary p-1'><small class='text-white'>- " + item.fullname + "</small></div></li>");
+                        }
+
+                        if (parseInt(item.status) == 1) {
+                            // $("#guest-table-body").append("<tr><td>" + item.fullname + "</td><td>" + i + "</td><td class='text-center'><i class='fas text-success fa-check'></i></td><td>" + foods[item.food - 1] + "</td><td>" + musics[item.music - 1] + "</td></tr>");
+                            $("#guest-table-body").append("<tr><td>" + musics[item.music - 1] + "</td><td>" + foods[item.food - 1] + "</td><td class='text-center'><i class='fas text-success fa-check'></i></td><td>" + i + "</td><td>" + item.fullname + "</td></tr>");
+
+                        }
+                        else if (parseInt(item.status) == 0) {
+                            $("#guest-table-body").append("<tr><td>" + musics[item.music - 1] + "</td><td>" + foods[item.food - 1] +  "</td><td class='text-center'><i class='fas text-danger fa-times'></i></td><td>" + i + "</td><td>" + item.fullname + "</td></tr>");
+
+
+                        }
+                        else {
+                            $("#guest-table-body").append("<tr><td>" + musics[item.music - 1] + "</td><td>" + foods[item.food - 1] + "</td><td class='text-center'><i class='fas fa-question'></i></td><td>" + i + "</td><td>" + item.fullname + "</td></tr>");
+                        }
+                    });
+                    $("#continentalCount").text(continentFoodPreferedCount);
+                    $("#chineseCount").text(chineseFoodPreferedCount);
+                    $("#indianCount").text(indianFoodPreferedCount);
+                    $("#thaiCount").text(thaiFoodPreferedCount);
+
+                    $("#popCount").text(popMusicPreferedCount);
+                    $("#rockCount").text(rockMusicPreferedCount);
+                    $("#jazzCount").text(jazzMusicPreferedCount);
+                    $("#classicCount").text(classicMusicPreferedCount);
+                }
+            });
+
+            database.ref("users/" + userid + "/event/tables").once("value").then(function (snapshot) {
+                if (snapshot.exists()) {
+                    $.each(snapshot.val(), function (key, value) {
+                        if(!value)
+                            return true;
+                        var tblStr = "<li class='list-group-item text-uppercase font-weight-bold'>" + key + " - " + value.type + "<ul class='list-group font-weight-normal'>";
+                        $.each(value.guest_details, function (key, value) {
+                            if(!value)
+                                return true;
+                            tblStr += "<li class='list-group-item'>" + value + "</li>";
+                        });
+                        tblStr += "</ul></li>";
+                        $("#tbl_arrangement").append(tblStr);
+                    })
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $("#myTab li:eq(0) a").tab('show');
+            $('a[data-toggle="tab"]').on('shown', function (e) {
+                e.target // active tab
+                e.relatedTarget // previous tab
+            })
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    userid = user.uid;
+                    $("#boardLink").attr("href", "board.html?user=" + userid);
+                    $("#albumLink").attr("href", "album.html?user=" + userid);
+                    updateUI();
+
+                } else {
+                    window.location.href = "login.html";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
